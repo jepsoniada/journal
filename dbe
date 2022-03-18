@@ -1,0 +1,2 @@
+#!/usr/bin/sh
+PGPASSWORD=asdf psql -h localhost -p 5432 -U postgres -f $1 -w

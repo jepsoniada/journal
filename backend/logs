@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+powershell.exe -c start .\\build\\reports\\tests\\test\\index.html
