@@ -1,11 +1,14 @@
 package com.demo.journal;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.demo.journal.dto.WorkRecordDto;
+import com.demo.journal.dto.WorkRecordDtoResult;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/")
 public class JournalController {
 	private final WorkRecordRepository dbRepository;
 
@@ -13,13 +16,27 @@ public class JournalController {
 		this.dbRepository = dbRepository;
 	}
 
-//	@GetMapping("/")
-//	public PlaceHolder index() {
-//		return new PlaceHolder(21, LocalDate.now(), "testing");
-//	}
-
 	@GetMapping("/getAll")
-	public Iterable<WorkRecord> index() {
-		return dbRepository.fetchAll();
+	public Iterable<WorkRecordDto> getAll() {
+		return dbRepository.fetchAll().stream()
+			.map(e -> new WorkRecordDto(
+				e.dateOfWork(),
+				e.numberOfHours(),
+				e.description()
+			))
+			.collect(Collectors.toList());
+	}
+
+	@PostMapping("/setter")
+	@ResponseStatus(HttpStatus.CREATED)
+	public WorkRecordDtoResult addNewRecord(@RequestBody WorkRecordDto workRecordDto) {
+		var record = new WorkRecord(
+			null,
+			workRecordDto.dateOfWork(),
+			workRecordDto.numberOfHours(),
+			workRecordDto.description()
+		);
+		dbRepository.save(record);
+		return new WorkRecordDtoResult(record.id());
 	}
 }
