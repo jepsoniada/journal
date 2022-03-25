@@ -1,5 +1,4 @@
 interface BaseRow {
-    id: number
     numberOfHours: number
     description: string
 }

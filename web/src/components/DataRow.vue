@@ -14,9 +14,9 @@
 
 <template>
     <div class="dataRow">
-        <div class="id">
+        <!-- <div class="id">
             {{props.id}}
-        </div>
+        </div> -->
         <div class="date">
             {{dateFormat(props.dateOfWork)}}
         </div>
@@ -30,24 +30,36 @@
 </template>
 
 <style>
-	@import url("@/assets/colort.css");
+	@import url("@/assets/color.css");
 
     .dataRow {
-        padding: 8px;
-        background: var(--5);
+        display: grid;
+        grid: 1fr / repeat(auto-fit, minmax(100px, 1fr));
+        padding: 8px 16px;
+        gap: 8px;
+        height: 24px;
         color: #222;
+        background: var(--3);
+    }
+
+    .dataRow div {
         display: flex;
-    }
-    .id {
+        justify-content: center;
+    } 
+
+    /* .id {
         min-width: 3em;
-    }
-    .date {
+    } */
+
+    /* .date {
         flex-grow: 1;
-    }
-    .hours {
+    } */
+
+    /* .hours {
         flex-grow: 1;
-    }
-    .description {
+    } */
+
+    /* .description {
         flex-grow: 1;
-    }
+    } */
 </style>
